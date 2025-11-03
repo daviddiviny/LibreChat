@@ -7,7 +7,8 @@ import { useQuery } from '@tanstack/react-query';
 import type { UseQueryOptions, QueryObserverResult } from '@tanstack/react-query';
 
 // Base URL for agent-insights service
-const AGENT_INSIGHTS_BASE_URL = import.meta.env.VITE_AGENT_INSIGHTS_URL || 'http://localhost:8001';
+// Updated to use claude-agents-service (port 8000) instead of deprecated agent-insights-service (port 8001)
+const AGENT_INSIGHTS_BASE_URL = import.meta.env.VITE_AGENT_INSIGHTS_URL || 'http://localhost:8000';
 
 // Types for agent insights
 export interface AgentOutput {
