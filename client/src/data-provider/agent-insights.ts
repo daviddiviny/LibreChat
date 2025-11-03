@@ -8,7 +8,24 @@ import type { UseQueryOptions, QueryObserverResult } from '@tanstack/react-query
 
 // Base URL for agent-insights service
 // Updated to use claude-agents-service (port 8000) instead of deprecated agent-insights-service (port 8001)
-const AGENT_INSIGHTS_BASE_URL = import.meta.env.VITE_AGENT_INSIGHTS_URL || 'http://localhost:8000';
+// In production, use the production claude-agents-service URL
+const getAgentInsightsBaseUrl = () => {
+  // If explicitly set via environment variable, use that
+  const envUrl = (import.meta.env as unknown as Record<string, string>).VITE_AGENT_INSIGHTS_URL;
+  if (envUrl) {
+    return envUrl;
+  }
+
+  // In production (librechat-*.run.app), use the production claude-agents-service
+  if (window.location.hostname.includes('run.app')) {
+    return 'https://claude-agents-service-cwhoiwuz3q-uc.a.run.app';
+  }
+
+  // Local development - use localhost
+  return 'http://localhost:8000';
+};
+
+const AGENT_INSIGHTS_BASE_URL = getAgentInsightsBaseUrl();
 
 // Types for agent insights
 export interface AgentOutput {
