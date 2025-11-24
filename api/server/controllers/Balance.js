@@ -70,3 +70,5 @@ async function balanceController(req, res) {
 
   res.status(200).json(balanceData);
 }
+
+module.exports = balanceController;
